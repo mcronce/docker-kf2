@@ -1,29 +1,3 @@
-function require_kf2() {
-    # Download kf2
-    [[ -f "${HOME}/kf2server/Binaries/Win64/KFServer.exe" ]] || \
-        ./steamcmd.sh \
-            +login anonymous \
-            +force_install_dir "${HOME}/kf2server" \
-            +app_update 232130 validate \
-            +exit
-}
-
-function update() {
-    ./steamcmd.sh \
-        +login anonymous \
-        +force_install_dir "${HOME}/kf2server" \
-        +app_update 232130 \
-        +exit
-}
-
-function validate() {
-    ./steamcmd.sh \
-        +login anonymous \
-        +force_install_dir "${HOME}/kf2server" \
-        +app_update 232130 validate \
-        +exit
-}
-
 function require_config() {
     # Generate INI files
     if [[ ! -f "${HOME}/kf2server/KFGame/Config/PCServer-KFGame.ini" ]]; then

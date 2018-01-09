@@ -12,8 +12,21 @@ WORKDIR /home/steam
 USER steam
 
 RUN \
-	curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -xzv && \
+	mkdir -pv /home/steam/kf2server && \
+	curl -v https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -xzv && \
 	./steamcmd.sh +exit
+
+RUN ./steamcmd.sh \
+	+login anonymous \
+	+force_install_dir /home/steam/kf2server \
+	+app_update 232130 validate \
+	+exit
+
+RUN ./steamcmd.sh \
+	+login anonymous \
+	+force_install_dir /home/steam/kf2server \
+	+app_update 232130 \
+	+exit
 
 ADD kf2_functions.sh kf2_functions.sh 
 ADD main main 
