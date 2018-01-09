@@ -28,8 +28,7 @@ RUN ./steamcmd.sh \
 	+app_update 232130 \
 	+exit
 
-ADD kf2_functions.sh kf2_functions.sh 
-ADD main main 
+ADD kf2_functions.sh main /home/steam/
 
 # Steam port
 EXPOSE 20560/udp
