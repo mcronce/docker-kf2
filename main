@@ -3,9 +3,9 @@
 mkdir -p kf2server
 source kf2_functions.sh
 
-require_steamcmd
 require_kf2
 update
 require_config
 load_config
 launch
+

@@ -1,13 +1,3 @@
-function require_steamcmd() {
-    # Download/extract steam
-    mkdir -p "${HOME}/downloads"
-    [[ -f "${HOME}/downloads/steamcmd_linux.tar.gz" ]] || \
-        wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz -P "${HOME}/downloads"
-    [[ -f "${HOME}/steamcmd.sh" ]] || tar xzvf downloads/steamcmd_linux.tar.gz
-    
-    ./steamcmd.sh +exit
-}
-
 function require_kf2() {
     # Download kf2
     [[ -f "${HOME}/kf2server/Binaries/Win64/KFServer.exe" ]] || \
