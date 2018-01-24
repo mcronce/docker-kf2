@@ -2,11 +2,15 @@ function require_config() {
     # Generate INI files
     if [[ ! -f "${HOME}/kf2server/KFGame/Config/PCServer-KFGame.ini" ]]; then
         "${HOME}/kf2server/Binaries/Win64/KFGameSteamServer.bin.x86_64" kf-bioticslab?difficulty=0?adminpassword=secret?gamepassword=secret -port=7777 &
-        sleep 20
+        for i in {0..20}; do
+            if [[ -f "${HOME}/kf2server/KFGame/Config/PCServer-KFGame.ini" ]]; then
+                break;
+            fi;
+            sleep 1;
+        done;
         kfpid=$(pgrep -f port=7777)
         kill $kfpid
     fi
-
 }
 
 function load_config() {
