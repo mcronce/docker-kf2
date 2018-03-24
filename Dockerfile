@@ -1,34 +1,12 @@
-FROM ubuntu:xenial
+FROM mcronce/steam-game-base:latest
 
 RUN \
-	apt-get -y update && \
-	apt-get -y install curl lib32gcc1 && \
-	apt-get clean && \
-	find /var/lib/apt/lists -type f | xargs rm -vf
+	echo "--- Installing Killing Floor 2 server; output is buffered by Docker, so this will take a while with no visibility." && \
+	/app/steamcmd +login anonymous +force_install_dir /app/killing-floor-2 +app_update 232130 validate +exit && \
+	mkdir -pv /app/killing-floor-2/KFGame/Cache
 
-RUN useradd -m steam
-
-WORKDIR /home/steam
-USER steam
-
-RUN \
-	mkdir -pv /home/steam/kf2server && \
-	curl -v https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -xzv && \
-	./steamcmd.sh +exit
-
-RUN ./steamcmd.sh \
-	+login anonymous \
-	+force_install_dir /home/steam/kf2server \
-	+app_update 232130 validate \
-	+exit
-
-RUN ./steamcmd.sh \
-	+login anonymous \
-	+force_install_dir /home/steam/kf2server \
-	+app_update 232130 \
-	+exit
-
-ADD kf2_functions.sh main /home/steam/
+ADD LinuxServer-KFGame.ini /app/killing-floor-2/KFGame/Config/LinuxServer-KFGame.ini.example
+ADD KFWeb.ini /app/killing-floor-2/KFGame/Config/KFWeb.ini.example
 
 # Steam port
 EXPOSE 20560/udp
@@ -42,5 +20,5 @@ EXPOSE 7777/udp
 # Web Admin port
 EXPOSE 8080/tcp
 
-CMD ["/bin/bash", "main"]
+ENTRYPOINT ["/app/run"]
 
